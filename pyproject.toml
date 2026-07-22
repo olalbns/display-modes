@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "display-modes"
+version = "0.1.0"
+description = "Small Linux display mode switcher"
+requires-python = ">=3.10"
+[project.scripts]
+display-modes = "display_modes.app:main"
+[tool.setuptools.data-files]
+"share/applications" = ["data/io.github.displaymodes.desktop"]

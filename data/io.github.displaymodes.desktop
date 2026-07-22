@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Modes d’affichage
+Comment=Dupliquer ou étendre les écrans
+Exec=display-modes
+Icon=video-display
+Terminal=false
+Type=Application
+Categories=Settings;HardwareSettings;GTK;
+Keywords=screen;display;monitor;mirror;extend;
