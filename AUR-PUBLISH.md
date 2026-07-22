@@ -21,12 +21,11 @@ L’AUR héberge seulement les fichiers d’empaquetage, pas le code complet. Il
 faut avoir un compte AUR et une clé SSH enregistrée sur aur.archlinux.org.
 
 ```bash
-cd aur
-git clone ssh://aur@aur.archlinux.org/display-modes-git.git
-aur_repo=display-modes-git
-cp "$aur_repo"/PKGBUILD "$aur_repo"/PKGBUILD.bak 2>/dev/null || true
-cp display-modes-git/PKGBUILD display-modes-git/.SRCINFO "$aur_repo"/
-cd "$aur_repo"
+# À exécuter depuis la racine du projet display-modes.
+project_dir="$PWD"
+git clone ssh://aur@aur.archlinux.org/display-modes-git.git /tmp/display-modes-git-aur
+cp "$project_dir/aur/display-modes-git/PKGBUILD" /tmp/display-modes-git-aur/
+cd /tmp/display-modes-git-aur
 makepkg --printsrcinfo > .SRCINFO
 git add PKGBUILD .SRCINFO
 git commit -m 'Initial AUR package'
