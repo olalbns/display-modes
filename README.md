@@ -46,10 +46,6 @@ Lancez `display-modes`, ou utilisez **Modes d’affichage** dans le menu d’app
 - Avec *Dupliquer*, les écrans doivent avoir un mode de résolution/fréquence compatible. Sinon, l’outil affiche l’erreur retournée par le système.
 - Pour Hyprland, les réglages appliqués sont dynamiques. Ajoutez vos règles `monitor = …` à `hyprland.conf` si vous souhaitez les rendre permanents après redémarrage.
 
-## Tester sans installer
-```bash
-PYTHONPATH=. python -m display_modes.app
-```
 
 ## Langue de l’interface
 
