@@ -25,6 +25,9 @@ pkgver() {
 
 build() {
   cd "${srcdir}/${_pkgname}"
+  # Le catalogue .mo est généré durant la construction ; Git ne versionne pas
+  # les répertoires vides, il faut donc créer sa destination explicitement.
+  install -d locale/fr/LC_MESSAGES
   msgfmt po/fr.po --output-file locale/fr/LC_MESSAGES/display-modes.mo
   python -m build --wheel --no-isolation
 }
