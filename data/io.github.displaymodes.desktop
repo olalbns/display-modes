@@ -1,9 +1,12 @@
 [Desktop Entry]
-Name=Modes d’affichage
-Comment=Dupliquer ou étendre les écrans
+Name=Display Modes
+Name[fr]=Modes d’affichage
+Comment=Duplicate or extend displays
+Comment[fr]=Dupliquer ou étendre les écrans
 Exec=display-modes
 Icon=video-display
 Terminal=false
 Type=Application
 Categories=Settings;HardwareSettings;GTK;
 Keywords=screen;display;monitor;mirror;extend;
+Keywords[fr]=écran;affichage;moniteur;dupliquer;étendre;

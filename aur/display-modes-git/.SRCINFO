@@ -10,6 +10,7 @@ pkgbase = display-modes-git
 	makedepends = python-installer
 	makedepends = python-wheel
 	makedepends = python-setuptools
+	makedepends = gettext
 	depends = python
 	depends = python-gobject
 	depends = gtk4

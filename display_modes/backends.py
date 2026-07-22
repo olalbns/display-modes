@@ -9,6 +9,8 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum
 
+from .i18n import _
+
 
 class Mode(str, Enum):
     MIRROR = "mirror"
@@ -50,9 +52,9 @@ def run(*args: str) -> str:
                                 stderr=subprocess.PIPE, check=True)
         return result.stdout
     except FileNotFoundError:
-        raise DisplayError(f"La commande « {args[0]} » n’est pas installée.")
+        raise DisplayError(_("The command “{}” is not installed.").format(args[0]))
     except subprocess.CalledProcessError as exc:
-        details = exc.stderr.strip() or exc.stdout.strip() or "erreur inconnue"
+        details = exc.stderr.strip() or exc.stdout.strip() or _("unknown error")
         raise DisplayError(details)
 
 
@@ -83,7 +85,7 @@ class HyprlandBackend(Backend):
     def apply(self, mode: Mode) -> str:
         outputs = self.outputs()
         if len(outputs) < 2:
-            raise DisplayError("Au moins deux écrans actifs sont nécessaires.")
+            raise DisplayError(_("At least two connected displays are required."))
         primary = next((o for o in outputs if o.internal), outputs[0])
         others = [o for o in outputs if o.name != primary.name]
 
@@ -111,7 +113,7 @@ class HyprlandBackend(Backend):
                 else:
                     pos = f"0x{primary.height + cursor_y}"; cursor_y += output.height
                 self._set(f"{output.name},preferred,{pos},1")
-        return "Configuration appliquée avec Hyprland."
+        return _("Configuration applied with Hyprland.")
 
 
 class XrandrBackend(Backend):
@@ -131,7 +133,7 @@ class XrandrBackend(Backend):
     def apply(self, mode: Mode) -> str:
         outputs = self.outputs()
         if len(outputs) < 2:
-            raise DisplayError("Au moins deux écrans connectés sont nécessaires.")
+            raise DisplayError(_("At least two connected displays are required."))
         primary = next((o for o in outputs if o.internal), next((o for o in outputs if o.primary), outputs[0]))
         others = [o for o in outputs if o.name != primary.name]
         if mode == Mode.INTERNAL_ONLY:
@@ -150,15 +152,14 @@ class XrandrBackend(Backend):
             for o in others:
                 run("xrandr", "--output", o.name, "--auto", relation, anchor)
                 anchor = o.name
-        return "Configuration appliquée avec xrandr."
+        return _("Configuration applied with xrandr.")
 
 
 class UnsupportedWaylandBackend(Backend):
-    name = "Wayland non pris en charge"
+    name = "Unsupported Wayland"
     def outputs(self) -> list[Output]: return []
     def apply(self, mode: Mode) -> str:
-        raise DisplayError("Ce compositeur Wayland ne propose pas d’API universelle de gestion des écrans. "
-                           "Cette première version prend Hyprland en charge nativement.")
+        raise DisplayError(_("This Wayland compositor does not provide a universal display-management API. This first version supports Hyprland natively."))
 
 
 def detect_backend() -> Backend:

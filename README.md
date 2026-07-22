@@ -50,3 +50,18 @@ Lancez `display-modes`, ou utilisez **Modes d’affichage** dans le menu d’app
 ```bash
 PYTHONPATH=. python -m display_modes.app
 ```
+
+## Langue de l’interface
+
+L’interface suit automatiquement la langue de la session définie par
+`LC_MESSAGES` puis `LANG`. Les traductions livrées sont le français et
+l’anglais (langue de repli). Par exemple :
+
+```bash
+LANG=fr_FR.UTF-8 display-modes # français
+LANG=en_US.UTF-8 display-modes # anglais
+```
+
+Les catalogues gettext sont dans `po/`. Pour ajouter une langue, créez un
+fichier `po/<code-langue>.po`, compilez-le avec `msgfmt`, puis installez le
+fichier produit dans `usr/share/locale/<code-langue>/LC_MESSAGES/display-modes.mo`.
