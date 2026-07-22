@@ -8,5 +8,12 @@ description = "Small Linux display mode switcher"
 requires-python = ">=3.10"
 [project.scripts]
 display-modes = "display_modes.app:main"
+
+# Le dépôt contient aussi les dossiers « aur » et « data ». On déclare
+# explicitement le seul paquet Python pour empêcher setuptools de les prendre
+# à tort pour des paquets namespace lors de la construction AUR.
+[tool.setuptools]
+packages = ["display_modes"]
+
 [tool.setuptools.data-files]
 "share/applications" = ["data/io.github.displaymodes.desktop"]
