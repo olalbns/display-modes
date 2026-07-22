@@ -66,10 +66,14 @@ class HyprlandBackend(Backend):
     name = "Hyprland (Wayland)"
 
     def outputs(self) -> list[Output]:
-        raw = run("hyprctl", "monitors", "-j")
+        # Sans « all », Hyprland peut omettre une sortie connectée mais
+        # désactivée. Cela faisait croire à l’interface qu’un seul écran
+        # existait, alors que la sortie pouvait être réactivée par une action.
+        raw = run("hyprctl", "monitors", "all", "-j")
         monitors = json.loads(raw)
         return [Output(m["name"], internal_name(m["name"]), m.get("focused", False),
-                       int(m.get("width", 1920)), int(m.get("height", 1080)), True)
+                       int(m.get("width", 1920)), int(m.get("height", 1080)),
+                       not m.get("disabled", False))
                 for m in monitors]
 
     @staticmethod
